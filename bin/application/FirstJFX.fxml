@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="318.0" prefWidth="429.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="application.FXController">
+<BorderPane prefHeight="600" prefWidth="500" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="application.FXController">
   <!-- TODO Add Nodes -->
   <bottom>
     <Button id="start_button" fx:id="start_btn" mnemonicParsing="false" onAction="#startCamera" text="Start Camera" textAlignment="CENTER" BorderPane.alignment="CENTER">
@@ -17,6 +17,6 @@
     </Button>
   </bottom>
   <center>
-    <ImageView fx:id="currentFrame" fitHeight="300" fitWidth="300" pickOnBounds="true" preserveRatio="true" />
+    <ImageView fx:id="currentFrame" fitHeight="400" fitWidth="500" pickOnBounds="true" preserveRatio="true" />
   </center>
 </BorderPane>

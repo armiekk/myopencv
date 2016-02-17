@@ -4,7 +4,9 @@ package application;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,11 +45,13 @@ public class FXController {
 	
 	private List<List<Point>> queue = new ArrayList<List<Point>>();
 	
+	private Queue<List<Point>> queue2 = new LinkedList<>();
+	
 	@FXML
 	protected void startCamera(ActionEvent event){
 		if(!this.cameraActive){
 			
-			this.capture.open("1cut.mp4");
+			this.capture.open("badminton1_new.mp4");
 			
 			if(this.capture.isOpened()){
 				
@@ -64,7 +68,7 @@ public class FXController {
 				};
 				
 				this.timer = Executors.newSingleThreadScheduledExecutor();
-				this.timer.scheduleAtFixedRate(frameGrabber, 0, 110, TimeUnit.MILLISECONDS);
+				this.timer.scheduleAtFixedRate(frameGrabber, 0, 60, TimeUnit.MILLISECONDS);
 				
 				this.start_btn.setText("Stop Camera");
 			} else{
@@ -76,9 +80,10 @@ public class FXController {
 			
 			this.start_btn.setText("Start Button");
 			
+			
 			try {
 				this.timer.shutdown();
-				this.timer.awaitTermination(30, TimeUnit.MILLISECONDS);
+				this.timer.awaitTermination(60, TimeUnit.MILLISECONDS);
 				
 			} catch (InterruptedException  e) {
 				System.err.println("Exception in stopping the frame capture, trying to release the camera now... " + e);
@@ -111,9 +116,9 @@ public class FXController {
 					Imgproc.cvtColor(blurredImage, hsvImage, Imgproc.COLOR_BGR2HSV);
 					
 					//set color
-					Scalar minValue = new Scalar(0, 0, 0);
+					Scalar minValue = new Scalar(162, 161, 86);
 					
-					Scalar maxValue = new Scalar(180, 68, 66);
+					Scalar maxValue = new Scalar(180, 255, 255);
 					
 					Core.inRange(hsvImage, minValue, maxValue, mask);
 					
@@ -154,15 +159,17 @@ public class FXController {
 	}
 	
 	
-	private List<Point> findCentroid(List<MatOfPoint> contours){
+	private List<Point> findCentroid(MatOfPoint2f[] contours){
 		
-		List<Point> centroid = new ArrayList<Point>();
+		List<Point> centroid = new ArrayList<>();
 		
-		for (int i = 0; i < contours.size(); i++) {
-			Moments m = Imgproc.moments(contours.get(i));
+		for (int i = 0; i < contours.length; i++) {
+			Moments m = Imgproc.moments(contours[i]);
 			
 			int cx = (int) (m.m10/m.m00);
 			int cy = (int) (m.m01/m.m00);
+			
+			System.out.println("cx : "+cx+" cy : "+cy);
 			
 			centroid.add(new Point(cx, cy));
 		}
@@ -170,15 +177,31 @@ public class FXController {
 		return centroid;
 	}
 	
-	private Mat drawPath(List<MatOfPoint> contours, Mat frame){
+	private Mat drawPath(MatOfPoint2f[] contours, Mat frame){
 		List<Point> centroid = findCentroid(contours);
 		this.queue.add(centroid);
+		this.queue2.add(centroid);
+		Point last = null; int count = 1;
 		
-		for (int i = 0; i < this.queue.size(); i++) {
-			List<Point> marker = this.queue.get(i);
-			for (int j = 0; j < marker.size(); j++) {
-				Imgproc.drawMarker(frame, marker.get(j), new Scalar(255, 0, 0), Imgproc.MARKER_SQUARE, 1, 10, Imgproc.LINE_AA );
+//		for (int i = 0; i < queue.size(); i++) {
+//			List<Point> current = queue.get(i);
+//			for (int j = 0; j < current.size(); j++) {
+//				if(last != null && current.get(j) != null){
+//					Imgproc.line(frame, current.get(j), last, new Scalar(255, 0, 0),2);
+//				}
+//				last = current.get(j);
+//			}
+//		}
+		
+		for (List<Point> current : this.queue2) {
+			if(count % 30 == 0){ this.queue2.remove(); }
+			for (int i = 0; i < current.size(); i++) {
+				if(last != null && current.get(i) != null){
+					Imgproc.line(frame, current.get(i), last, new Scalar(255, 0, 0),2);
+				}
+				last = current.get(i);
 			}
+			count++;
 		}
 		
 		return frame;
@@ -187,6 +210,8 @@ public class FXController {
 	private Mat findAndDrawContour(Mat maskedImage, Mat frame){
 		List<MatOfPoint> contours = new ArrayList<>();
 		Mat hierarchy = new Mat();
+		
+		
 		
 		Imgproc.findContours(maskedImage, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
 		
@@ -208,7 +233,7 @@ public class FXController {
 			
 		}
 		
-		frame = drawPath(contours, frame);
+		frame = drawPath(contours_poly, frame);
 		
 		
 		for (int i = 0; i < contours_poly.length; i++)

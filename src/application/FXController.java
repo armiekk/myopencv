@@ -3,6 +3,7 @@ package application;
 
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,19 +24,24 @@ import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
+import org.opencv.video.Video;
 import org.opencv.videoio.VideoCapture;
+import org.opencv.videoio.Videoio;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
 public class FXController {
 	@FXML
 	private Button start_btn;
 	@FXML
 	private ImageView currentFrame;
+	@FXML
+	private Button load_btn;
 	
 	private ScheduledExecutorService timer;
 	
@@ -43,16 +49,14 @@ public class FXController {
 	
 	private boolean cameraActive = false;
 	
-	private List<List<Point>> queue = new ArrayList<List<Point>>();
+	final FileChooser fileChooser = new FileChooser();
 	
 	private Queue<List<Point>> queue2 = new LinkedList<>();
+
 	
 	@FXML
 	protected void startCamera(ActionEvent event){
 		if(!this.cameraActive){
-			
-			this.capture.open("badminton1_new.mp4");
-			
 			if(this.capture.isOpened()){
 				
 				this.cameraActive = true;
@@ -70,7 +74,7 @@ public class FXController {
 				this.timer = Executors.newSingleThreadScheduledExecutor();
 				this.timer.scheduleAtFixedRate(frameGrabber, 0, 60, TimeUnit.MILLISECONDS);
 				
-				this.start_btn.setText("Stop Camera");
+				this.start_btn.setText("Pause Video");
 			} else{
 				System.err.println("Impossible to open the camera connection...");
 			}
@@ -78,10 +82,11 @@ public class FXController {
 		} else{
 			this.cameraActive = false;
 			
-			this.start_btn.setText("Start Button");
+			this.start_btn.setText("Play Video");
 			
 			
 			try {
+				
 				this.timer.shutdown();
 				this.timer.awaitTermination(60, TimeUnit.MILLISECONDS);
 				
@@ -89,11 +94,19 @@ public class FXController {
 				System.err.println("Exception in stopping the frame capture, trying to release the camera now... " + e);
 			}
 			
-			this.capture.release();
+			//this.capture.release();
 			
-			this.currentFrame.setImage(null);
+			//this.currentFrame.setImage(null);
 		}
 	}
+	@FXML
+	protected void browVideo(ActionEvent event) {
+		File file = fileChooser.showOpenDialog(null);
+		if (file != null) {
+			this.capture.open(file.getAbsolutePath());
+		}
+	}
+	
 	
 	
 	//สร้าง frame ที่แสดง video
@@ -104,9 +117,7 @@ public class FXController {
 		if(this.capture.isOpened()){
 			try {
 				this.capture.read(frame);
-				
 				if(!frame.empty()){
-					
 					Mat blurredImage = new Mat();
 					Mat hsvImage = new Mat();
 					Mat mask = new Mat();
@@ -129,7 +140,7 @@ public class FXController {
 					Imgproc.erode(mask, morphOutput, erodeElement);
 					
 					Imgproc.dilate(mask, morphOutput, dilateElement);
-					Imgproc.dilate(mask, morphOutput, dilateElement);
+					Imgproc.dilate(mask, morphOutput, dilateElement);	
 					
 					frame = this.findAndDrawContour(morphOutput, frame);
 					
@@ -146,8 +157,7 @@ public class FXController {
 		
 		return imageToShow;
 	}
-	
-	//แปลง Mat เป็น Image
+//แปลง Mat เป็น Image
 	private Image mat2Image(Mat frame){
 		
 		MatOfByte buffer = new MatOfByte();
@@ -157,8 +167,7 @@ public class FXController {
 		
 		return new Image(new ByteArrayInputStream(buffer.toArray()));
 	}
-	
-	
+
 	private List<Point> findCentroid(MatOfPoint2f[] contours){
 		
 		List<Point> centroid = new ArrayList<>();
@@ -169,8 +178,6 @@ public class FXController {
 			int cx = (int) (m.m10/m.m00);
 			int cy = (int) (m.m01/m.m00);
 			
-			System.out.println("cx : "+cx+" cy : "+cy);
-			
 			centroid.add(new Point(cx, cy));
 		}
 		
@@ -179,19 +186,10 @@ public class FXController {
 	
 	private Mat drawPath(MatOfPoint2f[] contours, Mat frame){
 		List<Point> centroid = findCentroid(contours);
-		this.queue.add(centroid);
+		//this.queue.add(centroid);
 		this.queue2.add(centroid);
 		Point last = null; int count = 1;
-		
-//		for (int i = 0; i < queue.size(); i++) {
-//			List<Point> current = queue.get(i);
-//			for (int j = 0; j < current.size(); j++) {
-//				if(last != null && current.get(j) != null){
-//					Imgproc.line(frame, current.get(j), last, new Scalar(255, 0, 0),2);
-//				}
-//				last = current.get(j);
-//			}
-//		}
+
 		
 		for (List<Point> current : this.queue2) {
 			if(count % 30 == 0){ this.queue2.remove(); }

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1366.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="application.FXController">
+<AnchorPane prefHeight="700.0" prefWidth="1366.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.badminton.application.FXController">
   <children>
     <TabPane layoutX="-1.0" layoutY="0.0" prefHeight="700.0" prefWidth="1368.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
@@ -61,23 +61,23 @@
                   <bottom>
                     <Pane prefHeight="84.0" prefWidth="1362.0" style="&#10;" styleClass="null">
                       <children>
-                        <Button fx:id="load_btn" alignment="CENTER" layoutX="375.0" layoutY="24.0" minHeight="35.0" onAction="#browVideo" minWidth="80.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" text="Load Video" textAlignment="LEFT" />
+                        <Button fx:id="load_btn" alignment="CENTER" layoutX="375.0" layoutY="24.0" minHeight="35.0" minWidth="80.0" mnemonicParsing="false" onAction="#browVideo" prefHeight="35.0" prefWidth="150.0" text="Load Video" textAlignment="LEFT" />
                         <Button fx:id="start_btn" layoutX="529.0" layoutY="24.0" mnemonicParsing="false" onAction="#startCamera" prefHeight="35.0" prefWidth="150.0" text="Play Video" />
-                        <Button alignment="CENTER" layoutX="683.0" layoutY="24.0" minHeight="35.0" minWidth="80.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" text="Win Point" textAlignment="LEFT" />
-                        <Button alignment="CENTER" layoutX="837.0" layoutY="24.0" minHeight="35.0" minWidth="80.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" text="Lose point" textAlignment="LEFT" />
+                        <Button fx:id="wpoint_btn" alignment="CENTER" layoutX="683.0" layoutY="24.0" minHeight="35.0" minWidth="80.0" mnemonicParsing="false" onAction="#winPoint" prefHeight="35.0" prefWidth="150.0" text="Win Point" textAlignment="LEFT" />
+                        <Button fx:id="lpoint_btn" alignment="CENTER" layoutX="837.0" layoutY="24.0" minHeight="35.0" minWidth="80.0" mnemonicParsing="false" onAction="#losePoint" prefHeight="35.0" prefWidth="150.0" text="Lose point" textAlignment="LEFT" />
                       </children>
                     </Pane>
                   </bottom>
                   <center>
-                    <ImageView fx:id="currentFrame"  fitHeight="449.0" fitWidth="598.6666666666666" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fx:id="currentFrame" fitHeight="448.99998474121094" fitWidth="598.666665675277" pickOnBounds="true" preserveRatio="true" />
                   </center>
                   <left>
-                    <Pane prefHeight="585.0" prefWidth="345.0">
+                    <Pane prefHeight="585.0" prefWidth="342.6666259765625">
                       <children>
-                        <TableView layoutX="14.0" layoutY="68.0" prefHeight="448.999977929685" prefWidth="331.0000999999975">
+                        <TableView layoutX="14.0" layoutY="68.0" prefHeight="448.999977929685" prefWidth="314.999977929685">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Column X" />
-                            <TableColumn prefWidth="75.0" text="Column X" />
+                            <TableColumn prefWidth="75.0" text="Match ID" />
+                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="242.0" text="ผู้เข้าแข่งขัน" />
                           </columns>
                         </TableView>
                         <Label font="$x1" layoutX="14.0" layoutY="35.0" prefWidth="83.0" text="ผู้เล่น" />
@@ -85,15 +85,22 @@
                     </Pane>
                   </left>
                   <right>
-                    <Pane prefHeight="585.0" prefWidth="375.0">
+                    <Pane prefHeight="585.0" prefWidth="403.6666259765625">
                       <children>
-                        <TableView layoutX="0.0" layoutY="82.0" prefHeight="435.0" prefWidth="361.0">
+                        <TableView layoutX="28.0" layoutY="68.0" prefHeight="449.0" prefWidth="362.0" fx:id="event_detail_tb" >
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Column X" />
-                            <TableColumn prefWidth="75.0" text="Column X" />
+                            <TableColumn maxWidth="10000.0" minWidth="0.0" prefWidth="0.0" text="แต้ม">
+                              <columns>
+                                <TableColumn prefWidth="75.0" text="ได้" fx:id="win_ptn"/>
+                                <TableColumn prefWidth="75.0" text="เสีย" fx:id="lost_ptn"/>
+                              </columns>
+                            </TableColumn>
+                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="59.0" text="เวลา" fx:id="time"/>
+                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="71.0" text="เหตุการณ์" fx:id="event"/>
+                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="89.0" text="คะแนน" fx:id="sum_ptn"/>
                           </columns>
                         </TableView>
-                        <Label font="$x1" layoutX="0.0" layoutY="43.0" text="เหตุการณ์" />
+                        <Label font="$x1" layoutX="28.0" layoutY="26.0" text="เหตุการณ์" />
                       </children>
                     </Pane>
                   </right>

@@ -1,4 +1,4 @@
-package application;
+package com.badminton.application;
 
 
 
@@ -27,13 +27,21 @@ import org.opencv.imgproc.Moments;
 import org.opencv.video.Video;
 import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.Videoio;
-
+import services.PointManage;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import models.BadmintonDetail;
+import models.BadmintonEvent;
 
 public class FXController {
 	@FXML
@@ -42,6 +50,24 @@ public class FXController {
 	private ImageView currentFrame;
 	@FXML
 	private Button load_btn;
+	@FXML
+	private Button wpoint_btn;
+	@FXML
+	private Button lpoint_btn;
+	@FXML
+	private TableView<BadmintonDetail> event_detail_tb;
+	@FXML
+	private TableColumn<BadmintonDetail, Integer> win_ptn = new TableColumn<>("detailScrUs");
+	@FXML
+	private TableColumn<BadmintonDetail, Integer> lost_ptn = new TableColumn<>("detailScrFoeman");
+	@FXML
+	private TableColumn<BadmintonDetail, Integer> time = new TableColumn<>("detailTime");
+	@FXML
+	private TableColumn<BadmintonDetail, BadmintonEvent> event;
+	@FXML
+	private TableColumn<BadmintonDetail, Integer> sum_ptn;
+	
+	private final ObservableList<BadmintonDetail> data_detail = FXCollections.observableArrayList();
 	
 	private ScheduledExecutorService timer;
 	
@@ -52,10 +78,19 @@ public class FXController {
 	final FileChooser fileChooser = new FileChooser();
 	
 	private Queue<List<Point>> queue2 = new LinkedList<>();
-
+	
+	@FXML
+	private void initialize(){
+		win_ptn.setCellValueFactory(new PropertyValueFactory<BadmintonDetail, Integer>("detailScrUs"));
+		lost_ptn.setCellValueFactory(new PropertyValueFactory<BadmintonDetail, Integer>("detailScrFoeman"));
+		time.setCellValueFactory(new PropertyValueFactory<BadmintonDetail, Integer>("detailTime"));
+		
+		event_detail_tb.setItems(data_detail);
+	}
 	
 	@FXML
 	protected void startCamera(ActionEvent event){
+		
 		if(!this.cameraActive){
 			if(this.capture.isOpened()){
 				
@@ -106,7 +141,29 @@ public class FXController {
 			this.capture.open(file.getAbsolutePath());
 		}
 	}
-	
+	@FXML
+	protected void winPoint(ActionEvent event){
+		BadmintonDetail dt = new BadmintonDetail();
+		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC);
+		dt.setDetailTime(time/1000);
+		dt.setDetailScrUs(1);
+		dt.setDetailScrFoeman(0);
+		PointManage pointManage = new PointManage();
+		pointManage.addWinPoint(dt);
+		data_detail.add(dt);
+		
+	}
+	@FXML
+	protected void losePoint(ActionEvent event){
+		BadmintonDetail dt = new BadmintonDetail();
+		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC);
+		dt.setDetailTime(time/1000);
+		dt.setDetailScrUs(0);
+		dt.setDetailScrFoeman(1);
+		PointManage pointManage = new PointManage();
+		pointManage.addLostPoint(dt);
+		data_detail.add(dt);
+	}
 	
 	
 	//สร้าง frame ที่แสดง video
@@ -157,7 +214,7 @@ public class FXController {
 		
 		return imageToShow;
 	}
-//แปลง Mat เป็น Image
+//�?ปลง Mat เป็น Image
 	private Image mat2Image(Mat frame){
 		
 		MatOfByte buffer = new MatOfByte();
@@ -186,7 +243,6 @@ public class FXController {
 	
 	private Mat drawPath(MatOfPoint2f[] contours, Mat frame){
 		List<Point> centroid = findCentroid(contours);
-		//this.queue.add(centroid);
 		this.queue2.add(centroid);
 		Point last = null; int count = 1;
 

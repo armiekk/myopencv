@@ -1,4 +1,4 @@
-package application;
+package com.badminton.application;
 	
 import org.opencv.core.Core;
 

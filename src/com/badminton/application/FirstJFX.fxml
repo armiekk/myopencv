@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1366.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.badminton.application.FXController">
+<AnchorPane prefHeight="700.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.badminton.application.FXController">
   <children>
     <TabPane layoutX="-1.0" layoutY="0.0" prefHeight="700.0" prefWidth="1368.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
@@ -18,28 +19,70 @@
               <children>
                 <GridPane layoutX="15.0" layoutY="14.0" prefHeight="641.0" prefWidth="1339.0">
                   <children>
-                    <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <TableView fx:id="playerTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                       <columns>
-                        <TableColumn prefWidth="75.0" text="Column X" />
-                        <TableColumn prefWidth="75.0" text="Column X" />
+                        <TableColumn fx:id="playerCol" prefWidth="151.0" text="ผู้แข่งขัน" />
+                        <TableColumn fx:id="matchDayCol" minWidth="0.0" prefWidth="120.0" text="วันที่แข่งขัน" />
+                        <TableColumn fx:id="tournamentCol" prefWidth="99.0" text="ทัวร์นาเม้นท์" />
+                        <TableColumn fx:id="matchTitleCol" minWidth="0.0" prefWidth="121.0" text="แมทช์การแข่งขัน" />
+                        <TableColumn fx:id="stadiumCol" prefWidth="178.0" text="สนาม" />
                       </columns>
                     </TableView>
-                    <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                      <center>
-                        <Pane prefHeight="200.0" prefWidth="200.0">
-                          <children>
-                            <TextField layoutX="218.0" layoutY="158.0" prefHeight="24.9609375" prefWidth="393.0" />
-                            <Label layoutX="92.0" layoutY="156.0" prefHeight="-1.0" text="ชื่อ - นามสกุล : ">
-                              <font>
-                                <Font name="TH SarabunPSK Bold" size="24.0" fx:id="x1" />
-                              </font>
-                            </Label>
-                            <Label font="$x1" layoutX="151.0" layoutY="198.0" text="สีเสื้อ : " />
-                            <ColorPicker layoutX="218.0" layoutY="199.0" />
-                          </children>
-                        </Pane>
-                      </center>
-                    </BorderPane>
+                    <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                      <children>
+                        <TextField layoutX="235.0" layoutY="139.0" prefHeight="33.9609375" prefWidth="355.0" />
+                        <Label layoutX="235.0" layoutY="38.0" prefHeight="43.9609375" prefWidth="199.00009999999747" text="ข้อมูลนักแบดมินตัน">
+                          <font>
+                            <Font name="TH SarabunPSK Bold" size="36.0" fx:id="x1" />
+                          </font>
+                        </Label>
+                        <ColorPicker layoutX="235.0" layoutY="240.0" />
+                                    <DatePicker layoutX="235.0" layoutY="196.0" />
+                                    <TextField layoutX="235.0" layoutY="280.0" prefHeight="33.9609375" prefWidth="355.0" />
+                                    <TextField layoutX="235.0" layoutY="332.0" prefHeight="33.9609375" prefWidth="355.0" />
+                                    <TextField layoutX="235.0" layoutY="386.0" prefHeight="33.9609375" prefWidth="355.0" />
+                                    <Button layoutX="203.0" layoutY="469.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="บันทึกข้อมูล">
+                                       <font>
+                                          <Font name="TH SarabunPSK Bold" size="21.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="363.0" layoutY="469.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="ล้างข้อมูล">
+                                       <font>
+                                          <Font name="TH SarabunPSK Bold" size="21.0" />
+                                       </font>
+                                    </Button>
+                                    <Label layoutX="91.0" layoutY="141.0" text="ชื่อผู้เล่น :  ">
+                                       <font>
+                                          <Font name="TH SarabunPSK Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="89.0" layoutY="194.0" text="วันที่แข่งขัน :  ">
+                                       <font>
+                                          <Font name="TH SarabunPSK Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="92.0" layoutY="238.0" text="สีระบุผู้เล่น :  ">
+                                       <font>
+                                          <Font name="TH SarabunPSK Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="92.0" layoutY="282.0" text="ทัวร์นาเม้นท์ :  ">
+                                       <font>
+                                          <Font name="TH SarabunPSK Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="91.0" layoutY="334.0" text="แมทช์การแข่งขัน :">
+                                       <font>
+                                          <Font name="TH SarabunPSK Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="92.0" layoutY="388.0" text="สนาม :">
+                                       <font>
+                                          <Font name="TH SarabunPSK Bold" size="24.0" />
+                                       </font>
+                                    </Label>
+                      </children>
+                    </Pane>
                   </children>
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -55,63 +98,140 @@
         </Tab>
         <Tab text="Match Tracking">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="615.0" prefWidth="1366.0">
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="768.0" prefWidth="1366.0">
               <children>
-                <BorderPane layoutX="0.0" layoutY="0.0" prefHeight="669.0" prefWidth="1362.0">
-                  <bottom>
-                    <Pane prefHeight="84.0" prefWidth="1362.0" style="&#10;" styleClass="null">
+                <Pane layoutX="0.0" layoutY="0.0" prefHeight="542.0" prefWidth="1366.0">
+                  <children>
+                    <GridPane layoutX="0.0" layoutY="543.0" maxHeight="145.0" maxWidth="1368.0000999999975" minHeight="111.0" minWidth="1366.0" prefHeight="126.0" prefWidth="1368.0000999999975">
                       <children>
-                        <Button fx:id="load_btn" alignment="CENTER" layoutX="375.0" layoutY="24.0" minHeight="35.0" minWidth="80.0" mnemonicParsing="false" onAction="#browVideo" prefHeight="35.0" prefWidth="150.0" text="Load Video" textAlignment="LEFT" />
-                        <Button fx:id="start_btn" layoutX="529.0" layoutY="24.0" mnemonicParsing="false" onAction="#startCamera" prefHeight="35.0" prefWidth="150.0" text="Play Video" />
-                        <Button fx:id="wpoint_btn" alignment="CENTER" layoutX="683.0" layoutY="24.0" minHeight="35.0" minWidth="80.0" mnemonicParsing="false" onAction="#winPoint" prefHeight="35.0" prefWidth="150.0" text="Win Point" textAlignment="LEFT" />
-                        <Button fx:id="lpoint_btn" alignment="CENTER" layoutX="837.0" layoutY="24.0" minHeight="35.0" minWidth="80.0" mnemonicParsing="false" onAction="#losePoint" prefHeight="35.0" prefWidth="150.0" text="Lose point" textAlignment="LEFT" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="" styleClass="panel-control" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                          <children>
+                            <Button layoutX="53.0" layoutY="16.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="smash-score" text="">
+                              <stylesheets>
+                                <URL value="@application.css" />
+                              </stylesheets>
+                            </Button>
+                            <Button layoutX="266.0" layoutY="16.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="drop-score" text="">
+                              <stylesheets>
+                                <URL value="@application.css" />
+                              </stylesheets>
+                            </Button>
+                            <Button layoutX="266.0" layoutY="72.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="net-score" text="">
+                              <stylesheets>
+                                <URL value="@application.css" />
+                              </stylesheets>
+                            </Button>
+                            <Button layoutX="53.0" layoutY="72.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="out-score" text="">
+                              <stylesheets>
+                                <URL value="@application.css" />
+                              </stylesheets>
+                            </Button>
+                          </children>
+                          <stylesheets>
+                            <URL value="@application.css" />
+                          </stylesheets>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="" styleClass=", panel-control" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                          <children>
+                            <Button fx:id="start_btn" layoutX="163.0" layoutY="36.0" mnemonicParsing="false" onAction="#startCamera" prefHeight="40.0" prefWidth="130.0" text="Play Video" />
+                            <Button layoutX="309.0" layoutY="36.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Record Video" />
+                            <Button fx:id="load_btn" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#browVideo" prefHeight="40.0" prefWidth="130.0" text="Load Video" />
+                          </children>
+                          <stylesheets>
+                            <URL value="@application.css" />
+                          </stylesheets>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="" styleClass="panel-control" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                          <children>
+                            <Button layoutX="163.0" layoutY="36.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Button" />
+                            <Button layoutX="14.0" layoutY="36.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Button" />
+                            <Button layoutX="312.0" layoutY="36.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Button" />
+                          </children>
+                          <stylesheets>
+                            <URL value="@application.css" />
+                          </stylesheets>
+                        </Pane>
                       </children>
-                    </Pane>
-                  </bottom>
-                  <center>
-                    <ImageView fx:id="currentFrame" fitHeight="448.99998474121094" fitWidth="598.666665675277" pickOnBounds="true" preserveRatio="true" />
-                  </center>
-                  <left>
-                    <Pane prefHeight="585.0" prefWidth="342.6666259765625">
+                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                    </GridPane>
+                    <GridPane layoutX="1.0" layoutY="0.0" prefHeight="543.0" prefWidth="1366.0">
                       <children>
-                        <TableView layoutX="14.0" layoutY="68.0" prefHeight="448.999977929685" prefWidth="314.999977929685">
-                          <columns>
-                            <TableColumn prefWidth="75.0" text="Match ID" />
-                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="242.0" text="ผู้เข้าแข่งขัน" />
-                          </columns>
-                        </TableView>
-                        <Label font="$x1" layoutX="14.0" layoutY="35.0" prefWidth="83.0" text="ผู้เล่น" />
-                      </children>
-                    </Pane>
-                  </left>
-                  <right>
-                    <Pane prefHeight="585.0" prefWidth="403.6666259765625">
-                      <children>
-                        <TableView layoutX="28.0" layoutY="68.0" prefHeight="449.0" prefWidth="362.0" fx:id="event_detail_tb" >
-                          <columns>
-                            <TableColumn maxWidth="10000.0" minWidth="0.0" prefWidth="0.0" text="แต้ม">
+                        <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                          <children>
+                            <TableView layoutX="14.0" layoutY="14.0" prefHeight="514.0" prefWidth="234.0">
                               <columns>
-                                <TableColumn prefWidth="75.0" text="ได้" fx:id="win_ptn"/>
-                                <TableColumn prefWidth="75.0" text="เสีย" fx:id="lost_ptn"/>
+                                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="95.0" text="เวลา" />
+                                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="149.0" text="เหตุการณ์" />
                               </columns>
-                            </TableColumn>
-                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="59.0" text="เวลา" fx:id="time"/>
-                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="71.0" text="เหตุการณ์" fx:id="event"/>
-                            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="89.0" text="คะแนน" fx:id="sum_ptn"/>
-                          </columns>
-                        </TableView>
-                        <Label font="$x1" layoutX="28.0" layoutY="26.0" text="เหตุการณ์" />
+                            </TableView>
+                          </children>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                          <children>
+                            <ImageView fx:id="currentFrame" fitHeight="501.75" fitWidth="800.0" layoutX="152.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
+                          </children>
+                        </Pane>
                       </children>
-                    </Pane>
-                  </right>
-                </BorderPane>
+                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1124.0" minWidth="10.0" prefWidth="1103.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="679.0" minWidth="10.0" prefWidth="263.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                    </GridPane>
+                  </children>
+                </Pane>
               </children>
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="Replay Match">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <GridPane layoutX="0.0" layoutY="0.0" prefHeight="669.0" prefWidth="1368.0">
+                  <children>
+                    <Pane prefHeight="158.0" prefWidth="973.0" styleClass="panel-control" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                      <children>
+                        <Button id="start_btn" layoutX="441.0" layoutY="67.0" mnemonicParsing="false" onAction="#startCamera" prefHeight="40.0" prefWidth="130.0" text="Play Video" />
+                        <Button layoutX="701.0" layoutY="67.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Capture Image" />
+                        <Button id="load_btn" layoutX="181.0" layoutY="67.0" mnemonicParsing="false" onAction="#browVideo" prefHeight="40.0" prefWidth="130.0" text="Load Video" />
+                      </children>
+                      <stylesheets>
+                        <URL value="@application.css" />
+                      </stylesheets>
+                    </Pane>
+                    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;&#10;" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                      <children>
+                        <ImageView fitHeight="461.0" fitWidth="614.6666666666666" layoutX="198.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
+                      </children>
+                    </Pane>
+                    <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                      <content>
+                        <ListView prefHeight="486.0" prefWidth="355.0" />
+                      </content>
+                    </ScrollPane>
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1023.0" minWidth="10.0" prefWidth="1011.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="683.0" minWidth="10.0" prefWidth="357.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints maxHeight="510.0" minHeight="10.0" prefHeight="487.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="320.0" minHeight="10.0" prefHeight="182.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+              </children>
+            </AnchorPane>
           </content>
         </Tab>
       </tabs>

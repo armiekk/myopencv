@@ -27,6 +27,10 @@ import org.opencv.imgproc.Moments;
 import org.opencv.video.Video;
 import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.Videoio;
+
+import com.badminton.tableobject.MatchPeriod;
+import com.badminton.tableobject.Player;
+
 import services.PointManage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,8 +44,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import models.BadmintonDetail;
-import models.BadmintonEvent;
+import models.BmtDetail;
+import models.BmtEvent;
 
 public class FXController {
 	@FXML
@@ -50,24 +54,35 @@ public class FXController {
 	private ImageView currentFrame;
 	@FXML
 	private Button load_btn;
-	@FXML
-	private Button wpoint_btn;
-	@FXML
-	private Button lpoint_btn;
-	@FXML
-	private TableView<BadmintonDetail> event_detail_tb;
-	@FXML
-	private TableColumn<BadmintonDetail, Integer> win_ptn = new TableColumn<>("detailScrUs");
-	@FXML
-	private TableColumn<BadmintonDetail, Integer> lost_ptn = new TableColumn<>("detailScrFoeman");
-	@FXML
-	private TableColumn<BadmintonDetail, Integer> time = new TableColumn<>("detailTime");
-	@FXML
-	private TableColumn<BadmintonDetail, BadmintonEvent> event;
-	@FXML
-	private TableColumn<BadmintonDetail, Integer> sum_ptn;
 	
-	private final ObservableList<BadmintonDetail> data_detail = FXCollections.observableArrayList();
+	/**/
+	/*player table*/
+	@FXML
+	private TableView<Player> playerTable;
+	@FXML
+	private TableColumn<Player, String> playerCol;
+	@FXML
+	private TableColumn<Player, String> matchDayCol;
+	@FXML
+	private TableColumn<Player, String> tournamentCol;
+	@FXML
+	private TableColumn<Player, String> matchTitleCol;
+	@FXML
+	private TableColumn<Player, String> stadiumCol;
+	
+	/**/
+	/*match period detail*/
+	@FXML
+	private TableView<MatchPeriod> matchPeriodTable;
+	@FXML
+	private TableColumn<MatchPeriod, Double> timeCol;
+	@FXML
+	private TableColumn<MatchPeriod, Image> eventCol;
+	/***********************************/
+	//data bind tableView
+	private ObservableList<Player> playerData = FXCollections.observableArrayList();
+	
+	private ObservableList<MatchPeriod> matchPeriodData = FXCollections.observableArrayList();
 	
 	private ScheduledExecutorService timer;
 	
@@ -81,16 +96,20 @@ public class FXController {
 	
 	@FXML
 	private void initialize(){
-		win_ptn.setCellValueFactory(new PropertyValueFactory<BadmintonDetail, Integer>("detailScrUs"));
-		lost_ptn.setCellValueFactory(new PropertyValueFactory<BadmintonDetail, Integer>("detailScrFoeman"));
-		time.setCellValueFactory(new PropertyValueFactory<BadmintonDetail, Integer>("detailTime"));
+		/*binding player tableColumn*/
+		playerCol.setCellValueFactory(new PropertyValueFactory<Player, String>("playerName"));
+		matchDayCol.setCellValueFactory(new PropertyValueFactory<Player, String>("date"));
+		tournamentCol.setCellValueFactory(new PropertyValueFactory<Player, String>("tournament"));
+		matchTitleCol.setCellValueFactory(new PropertyValueFactory<Player, String>("match"));
+		stadiumCol.setCellValueFactory(new PropertyValueFactory<Player, String>("stadium"));
+		playerTable.setItems(playerData);
+		/* ********************************* */
+		/*binding matchPeriod tableColumn*/
 		
-		event_detail_tb.setItems(data_detail);
 	}
 	
 	@FXML
 	protected void startCamera(ActionEvent event){
-		
 		if(!this.cameraActive){
 			if(this.capture.isOpened()){
 				
@@ -143,26 +162,26 @@ public class FXController {
 	}
 	@FXML
 	protected void winPoint(ActionEvent event){
-		BadmintonDetail dt = new BadmintonDetail();
+		BmtDetail dt = new BmtDetail();
 		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC);
 		dt.setDetailTime(time/1000);
 		dt.setDetailScrUs(1);
 		dt.setDetailScrFoeman(0);
 		PointManage pointManage = new PointManage();
 		pointManage.addWinPoint(dt);
-		data_detail.add(dt);
+		//data_detail.add(dt);
 		
 	}
 	@FXML
 	protected void losePoint(ActionEvent event){
-		BadmintonDetail dt = new BadmintonDetail();
+		BmtDetail dt = new BmtDetail();
 		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC);
 		dt.setDetailTime(time/1000);
 		dt.setDetailScrUs(0);
 		dt.setDetailScrFoeman(1);
 		PointManage pointManage = new PointManage();
 		pointManage.addLostPoint(dt);
-		data_detail.add(dt);
+		//data_detail.add(dt);
 	}
 	
 	
@@ -204,6 +223,9 @@ public class FXController {
 					imageToShow = mat2Image(frame);
 					
 					
+				}else{
+					this.timer.shutdown();
+					this.timer.awaitTermination(60, TimeUnit.MILLISECONDS);
 				}
 				
 			} catch (Exception e) {
@@ -269,41 +291,41 @@ public class FXController {
 		
 		Imgproc.findContours(maskedImage, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
 		
-		Rect[] boundRect = new Rect[contours.size()];
-		MatOfPoint2f[] contours_poly = new MatOfPoint2f[contours.size()];
-		Point[] center = new Point[contours.size()];
-		float[] radius = new float[contours.size()];
-		
-		
-		
-		
-		for (int i = 0; i < contours.size(); i++) {
-			contours_poly[i] = new MatOfPoint2f();
-			center[i] = new Point();
-			MatOfPoint2f curve = new MatOfPoint2f(contours.get(i).toArray());
-			boundRect[i] = Imgproc.boundingRect(new MatOfPoint(curve.toArray()));
-			Imgproc.approxPolyDP(curve, contours_poly[i], 3.0, true);
-			Imgproc.minEnclosingCircle(contours_poly[i], center[i], radius);
-			
-		}
-		
-		frame = drawPath(contours_poly, frame);
-		
-		
-		for (int i = 0; i < contours_poly.length; i++)
-		{
-			//if(objectBoundingRectangle.area()>500)
-			//Imgproc.drawContours(frame, contours, i,  new Scalar(0,255,0));
-			//Imgproc.circle(frame, center[i], (int)radius[i], new Scalar(0,255,0), 2);
-			//Imgproc.line(frame, center[i], center[i],  new Scalar(255,0,0));
-			if(boundRect[i].area()>500)
-			Imgproc.rectangle(frame, boundRect[i].tl(), boundRect[i].br(), new Scalar(0,255,0));
+		if(contours.size() > 0 && contours.size() <= 1){
+			Rect[] boundRect = new Rect[contours.size()];
+			MatOfPoint2f[] contours_poly = new MatOfPoint2f[contours.size()];
+			Point[] center = new Point[contours.size()];
+			float[] radius = new float[contours.size()];
 			
 			
 			
+			
+			for (int i = 0; i < contours.size(); i++) {
+				contours_poly[i] = new MatOfPoint2f();
+				center[i] = new Point();
+				MatOfPoint2f curve = new MatOfPoint2f(contours.get(i).toArray());
+				boundRect[i] = Imgproc.boundingRect(new MatOfPoint(curve.toArray()));
+				Imgproc.approxPolyDP(curve, contours_poly[i], 3.0, true);
+				Imgproc.minEnclosingCircle(contours_poly[i], center[i], radius);
+				
+			}
+			
+			frame = drawPath(contours_poly, frame);
+			
+			
+			for (int i = 0; i < contours_poly.length; i++)
+			{
+				//if(objectBoundingRectangle.area()>500)
+				//Imgproc.drawContours(frame, contours, i,  new Scalar(0,255,0));
+				//Imgproc.circle(frame, center[i], (int)radius[i], new Scalar(0,255,0), 2);
+				//Imgproc.line(frame, center[i], center[i],  new Scalar(255,0,0));
+				if(boundRect[i].area()>500)
+				Imgproc.rectangle(frame, boundRect[i].tl(), boundRect[i].br(), new Scalar(0,255,0));
+			}
+		}else{
+			this.queue2 = new LinkedList<>();
 		}
 
-		
 		return frame;
 	}
 }

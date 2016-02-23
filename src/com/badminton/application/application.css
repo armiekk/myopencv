@@ -1,1 +1,38 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+.panel-control {
+	-fx-background-color: lightgrey;
+	-fx-border-color: grey;
+}
+
+.net-score {
+	-fx-background-image: url("./btn_img/net.png");
+	-fx-color: lightgreen;
+	-fx-background-size: 100px 30px;
+	-fx-background-position: center ;
+	-fx-background-repeat: no-repeat; 
+}
+
+.smash-score {
+	-fx-background-image: url("./btn_img/smash.png");
+	-fx-color: lightgreen;
+	-fx-background-size: 100px 30px;
+	-fx-background-position: center ;
+	-fx-background-repeat: no-repeat; 
+}
+
+.drop-score {
+	-fx-background-image: url("./btn_img/drop.png");
+	-fx-color: lightgreen;
+	-fx-background-size: 100px 30px;
+	-fx-background-position: center ;
+	-fx-background-repeat: no-repeat; 
+}
+
+.out-score {
+	-fx-background-image: url("./btn_img/out.png");
+	-fx-color: lightgreen;
+	-fx-background-size: 100px 30px;
+	-fx-background-position: center ;
+	-fx-background-repeat: no-repeat; 
+}

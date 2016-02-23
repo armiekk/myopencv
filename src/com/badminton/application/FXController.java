@@ -38,8 +38,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -49,13 +51,27 @@ import models.BmtEvent;
 
 public class FXController {
 	@FXML
-	private Button start_btn;
+	private Button startBtn;
 	@FXML
 	private ImageView currentFrame;
 	@FXML
-	private Button load_btn;
+	private Button loadBtn;
+	@FXML
+	private Button addPlayerBtn;
+	/* ************************* */
+	/* input form */
+	@FXML 
+	private TextField playerInput;
+	@FXML 
+	private DatePicker matchDayInput;
+	@FXML 
+	private TextField tournamentInput;
+	@FXML 
+	private TextField matchTitleInput;
+	@FXML 
+	private TextField stadiumInput;
 	
-	/**/
+	/* ************************* */
 	/*player table*/
 	@FXML
 	private TableView<Player> playerTable;
@@ -70,7 +86,7 @@ public class FXController {
 	@FXML
 	private TableColumn<Player, String> stadiumCol;
 	
-	/**/
+	/* ************************* */
 	/*match period detail*/
 	@FXML
 	private TableView<MatchPeriod> matchPeriodTable;
@@ -78,7 +94,7 @@ public class FXController {
 	private TableColumn<MatchPeriod, Double> timeCol;
 	@FXML
 	private TableColumn<MatchPeriod, Image> eventCol;
-	/***********************************/
+	/* ************************* */
 	//data bind tableView
 	private ObservableList<Player> playerData = FXCollections.observableArrayList();
 	
@@ -128,7 +144,7 @@ public class FXController {
 				this.timer = Executors.newSingleThreadScheduledExecutor();
 				this.timer.scheduleAtFixedRate(frameGrabber, 0, 60, TimeUnit.MILLISECONDS);
 				
-				this.start_btn.setText("Pause Video");
+				this.startBtn.setText("Pause Video");
 			} else{
 				System.err.println("Impossible to open the camera connection...");
 			}
@@ -136,7 +152,7 @@ public class FXController {
 		} else{
 			this.cameraActive = false;
 			
-			this.start_btn.setText("Play Video");
+			this.startBtn.setText("Play Video");
 			
 			
 			try {
@@ -183,7 +199,13 @@ public class FXController {
 		pointManage.addLostPoint(dt);
 		//data_detail.add(dt);
 	}
-	
+	@FXML
+	protected void addPlayer(ActionEvent event){
+		Player add = new Player(playerInput.getText(), matchDayInput.getValue().toString(), tournamentInput.getText(), 
+				matchTitleInput.getText(), stadiumInput.getText());
+		System.out.println(add);
+		playerData.add(add);
+	}
 	
 	//สร้าง frame ที่แสดง video
 	private Image grabFrame(){

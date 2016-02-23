@@ -30,18 +30,18 @@
                     </TableView>
                     <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                       <children>
-                        <TextField layoutX="235.0" layoutY="139.0" prefHeight="33.9609375" prefWidth="355.0" />
+                        <TextField fx:id="playerInput" layoutX="235.0" layoutY="139.0" prefHeight="33.9609375" prefWidth="355.0" />
                         <Label layoutX="235.0" layoutY="38.0" prefHeight="43.9609375" prefWidth="199.00009999999747" text="ข้อมูลนักแบดมินตัน">
                           <font>
                             <Font name="TH SarabunPSK Bold" size="36.0" fx:id="x1" />
                           </font>
                         </Label>
                         <ColorPicker layoutX="235.0" layoutY="240.0" />
-                                    <DatePicker layoutX="235.0" layoutY="196.0" />
-                                    <TextField layoutX="235.0" layoutY="280.0" prefHeight="33.9609375" prefWidth="355.0" />
-                                    <TextField layoutX="235.0" layoutY="332.0" prefHeight="33.9609375" prefWidth="355.0" />
-                                    <TextField layoutX="235.0" layoutY="386.0" prefHeight="33.9609375" prefWidth="355.0" />
-                                    <Button layoutX="203.0" layoutY="469.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="บันทึกข้อมูล">
+                                    <DatePicker fx:id="matchDayInput" layoutX="235.0" layoutY="196.0" />
+                                    <TextField fx:id="tournamentInput" layoutX="235.0" layoutY="280.0" prefHeight="33.9609375" prefWidth="355.0" />
+                                    <TextField fx:id="matchTitleInput" layoutX="235.0" layoutY="332.0" prefHeight="33.9609375" prefWidth="355.0" />
+                                    <TextField fx:id="stadiumInput" layoutX="235.0" layoutY="386.0" prefHeight="33.9609375" prefWidth="355.0" />
+                                    <Button fx:id="addPlayerBtn" layoutX="203.0" layoutY="469.0" mnemonicParsing="false" onAction="#addPlayer" prefHeight="40.0" prefWidth="100.0" text="บันทึกข้อมูล">
                                        <font>
                                           <Font name="TH SarabunPSK Bold" size="21.0" />
                                        </font>
@@ -133,9 +133,9 @@
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="" styleClass=", panel-control" GridPane.columnIndex="1" GridPane.rowIndex="0">
                           <children>
-                            <Button fx:id="start_btn" layoutX="163.0" layoutY="36.0" mnemonicParsing="false" onAction="#startCamera" prefHeight="40.0" prefWidth="130.0" text="Play Video" />
+                            <Button fx:id="startBtn" layoutX="163.0" layoutY="36.0" mnemonicParsing="false" onAction="#startCamera" prefHeight="40.0" prefWidth="130.0" text="Play Video" />
                             <Button layoutX="309.0" layoutY="36.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Record Video" />
-                            <Button fx:id="load_btn" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#browVideo" prefHeight="40.0" prefWidth="130.0" text="Load Video" />
+                            <Button fx:id="loadBtn" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#browVideo" prefHeight="40.0" prefWidth="130.0" text="Load Video" />
                           </children>
                           <stylesheets>
                             <URL value="@application.css" />
@@ -143,9 +143,10 @@
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="" styleClass="panel-control" GridPane.columnIndex="2" GridPane.rowIndex="0">
                           <children>
-                            <Button layoutX="163.0" layoutY="36.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Button" />
-                            <Button layoutX="14.0" layoutY="36.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Button" />
-                            <Button layoutX="312.0" layoutY="36.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Button" />
+                            <Button layoutX="38.0" layoutY="72.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="out-lose-score" />
+                            <Button layoutX="38.0" layoutY="16.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="smash-lose-score" stylesheets="@application.css" />
+                            <Button layoutX="282.0" layoutY="16.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="drop-lose-score" stylesheets="@application.css" />
+                                          <Button layoutX="282.0" layoutY="72.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="net-lose-score" />
                           </children>
                           <stylesheets>
                             <URL value="@application.css" />

@@ -7,7 +7,7 @@
 
 .net-score {
 	-fx-background-image: url("./btn_img/net.png");
-	-fx-color: lightgreen;
+	-fx-color: green;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;
 	-fx-background-repeat: no-repeat; 
@@ -15,7 +15,7 @@
 
 .smash-score {
 	-fx-background-image: url("./btn_img/smash.png");
-	-fx-color: lightgreen;
+	-fx-color: green;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;
 	-fx-background-repeat: no-repeat; 
@@ -23,7 +23,7 @@
 
 .drop-score {
 	-fx-background-image: url("./btn_img/drop.png");
-	-fx-color: lightgreen;
+	-fx-color: green;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;
 	-fx-background-repeat: no-repeat; 
@@ -31,7 +31,39 @@
 
 .out-score {
 	-fx-background-image: url("./btn_img/out.png");
-	-fx-color: lightgreen;
+	-fx-color: green;
+	-fx-background-size: 100px 30px;
+	-fx-background-position: center ;
+	-fx-background-repeat: no-repeat; 
+}
+
+.net-lose-score {
+	-fx-background-image: url("./btn_img/net.png");
+	-fx-color: red;
+	-fx-background-size: 100px 30px;
+	-fx-background-position: center ;
+	-fx-background-repeat: no-repeat; 
+}
+
+.smash-lose-score {
+	-fx-background-image: url("./btn_img/smash.png");
+	-fx-color: red;
+	-fx-background-size: 100px 30px;
+	-fx-background-position: center ;
+	-fx-background-repeat: no-repeat; 
+}
+
+.drop-lose-score {
+	-fx-background-image: url("./btn_img/drop.png");
+	-fx-color: red;
+	-fx-background-size: 100px 30px;
+	-fx-background-position: center ;
+	-fx-background-repeat: no-repeat; 
+}
+
+.out-lose-score {
+	-fx-background-image: url("./btn_img/out.png");
+	-fx-color: red;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;
 	-fx-background-repeat: no-repeat; 

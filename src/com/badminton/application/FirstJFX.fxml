@@ -106,22 +106,22 @@
                       <children>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="" styleClass="panel-control" GridPane.columnIndex="0" GridPane.rowIndex="0">
                           <children>
-                            <Button layoutX="53.0" layoutY="16.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="smash-score" text="">
+                            <Button layoutX="53.0" layoutY="16.0" mnemonicParsing="false" onAction="#winSmashPoint" prefHeight="40.0" prefWidth="130.0" styleClass="smash-score" text="">
                               <stylesheets>
                                 <URL value="@application.css" />
                               </stylesheets>
                             </Button>
-                            <Button layoutX="266.0" layoutY="16.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="drop-score" text="">
+                            <Button layoutX="266.0" layoutY="16.0" mnemonicParsing="false" onAction="#winDropPoint" prefHeight="40.0" prefWidth="130.0" styleClass="drop-score" text="">
                               <stylesheets>
                                 <URL value="@application.css" />
                               </stylesheets>
                             </Button>
-                            <Button layoutX="266.0" layoutY="72.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="net-score" text="">
+                            <Button layoutX="266.0" layoutY="72.0" mnemonicParsing="false" onAction="#winNetPoint" prefHeight="40.0" prefWidth="130.0" styleClass="net-score" text="">
                               <stylesheets>
                                 <URL value="@application.css" />
                               </stylesheets>
                             </Button>
-                            <Button layoutX="53.0" layoutY="72.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="out-score" text="">
+                            <Button layoutX="53.0" layoutY="72.0" mnemonicParsing="false" onAction="#winOutPoint" prefHeight="40.0" prefWidth="130.0" styleClass="out-score" text="">
                               <stylesheets>
                                 <URL value="@application.css" />
                               </stylesheets>
@@ -143,10 +143,10 @@
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="" styleClass="panel-control" GridPane.columnIndex="2" GridPane.rowIndex="0">
                           <children>
-                            <Button layoutX="38.0" layoutY="72.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="out-lose-score" />
-                            <Button layoutX="38.0" layoutY="16.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="smash-lose-score" stylesheets="@application.css" />
-                            <Button layoutX="282.0" layoutY="16.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="drop-lose-score" stylesheets="@application.css" />
-                                          <Button layoutX="282.0" layoutY="72.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" styleClass="net-lose-score" />
+                            <Button layoutX="38.0" layoutY="72.0" mnemonicParsing="false" onAction="#loseOutPoint" prefHeight="40.0" prefWidth="130.0" styleClass="out-lose-score" />
+                            <Button layoutX="38.0" layoutY="16.0" mnemonicParsing="false" onAction="#loseSmashPoint" prefHeight="40.0" prefWidth="130.0" styleClass="smash-lose-score" stylesheets="@application.css" />
+                            <Button layoutX="282.0" layoutY="16.0" mnemonicParsing="false" onAction="#loseDropPoint" prefHeight="40.0" prefWidth="130.0" styleClass="drop-lose-score" stylesheets="@application.css" />
+                            <Button layoutX="282.0" layoutY="72.0" mnemonicParsing="false" onAction="#loseNetPoint" prefHeight="40.0" prefWidth="130.0" styleClass="net-lose-score" />
                           </children>
                           <stylesheets>
                             <URL value="@application.css" />
@@ -166,10 +166,10 @@
                       <children>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                           <children>
-                            <TableView layoutX="14.0" layoutY="14.0" prefHeight="514.0" prefWidth="234.0">
+                            <TableView fx:id="matchPeriodTable" layoutX="14.0" layoutY="14.0" prefHeight="514.0" prefWidth="234.0">
                               <columns>
-                                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="95.0" text="เวลา" />
-                                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="149.0" text="เหตุการณ์" />
+                                <TableColumn fx:id="timeCol" maxWidth="5000.0" minWidth="10.0" prefWidth="95.0" text="เวลา" />
+                                <TableColumn fx:id="eventCol" maxWidth="5000.0" minWidth="10.0" prefWidth="149.0" text="เหตุการณ์" />
                               </columns>
                             </TableView>
                           </children>

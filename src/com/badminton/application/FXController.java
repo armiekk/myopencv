@@ -49,7 +49,7 @@ import javafx.stage.FileChooser;
 import models.BmtDetail;
 import models.BmtEvent;
 
-public class FXController {
+public class FXController{
 	@FXML
 	private Button startBtn;
 	@FXML
@@ -95,11 +95,12 @@ public class FXController {
 	@FXML
 	private TableColumn<MatchPeriod, Image> eventCol;
 	/* ************************* */
-	//data bind tableView
+	/*data bind tableView */
 	private ObservableList<Player> playerData = FXCollections.observableArrayList();
 	
 	private ObservableList<MatchPeriod> matchPeriodData = FXCollections.observableArrayList();
-	
+	/* ************************* */
+	/*static variable */
 	private ScheduledExecutorService timer;
 	
 	private VideoCapture capture = new VideoCapture();
@@ -109,6 +110,7 @@ public class FXController {
 	final FileChooser fileChooser = new FileChooser();
 	
 	private Queue<List<Point>> queue2 = new LinkedList<>();
+	/* ************************* */
 	
 	@FXML
 	private void initialize(){
@@ -121,7 +123,10 @@ public class FXController {
 		playerTable.setItems(playerData);
 		/* ********************************* */
 		/*binding matchPeriod tableColumn*/
-		
+		timeCol.setCellValueFactory(new PropertyValueFactory<MatchPeriod, Double>("time"));
+		eventCol.setCellValueFactory(new PropertyValueFactory<MatchPeriod, Image>("event"));
+		matchPeriodTable.setItems(matchPeriodData);
+		/* ********************************* */
 	}
 	
 	@FXML
@@ -177,27 +182,84 @@ public class FXController {
 		}
 	}
 	@FXML
-	protected void winPoint(ActionEvent event){
-		BmtDetail dt = new BmtDetail();
-		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC);
-		dt.setDetailTime(time/1000);
-		dt.setDetailScrUs(1);
-		dt.setDetailScrFoeman(0);
-		PointManage pointManage = new PointManage();
-		pointManage.addWinPoint(dt);
-		//data_detail.add(dt);
-		
+	protected void winSmashPoint(ActionEvent event){
+		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC)/1000;
+		ImageView image = new ImageView();
+		image.setFitWidth(120);
+		image.setFitHeight(35);
+		image.setImage(new Image("./resources/smash.png"));
+		MatchPeriod matchPeriod = new MatchPeriod(time, image);
+		matchPeriodData.add(matchPeriod);
 	}
 	@FXML
-	protected void losePoint(ActionEvent event){
-		BmtDetail dt = new BmtDetail();
-		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC);
-		dt.setDetailTime(time/1000);
-		dt.setDetailScrUs(0);
-		dt.setDetailScrFoeman(1);
-		PointManage pointManage = new PointManage();
-		pointManage.addLostPoint(dt);
-		//data_detail.add(dt);
+	protected void winDropPoint(ActionEvent event){
+		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC)/1000;
+		ImageView image = new ImageView();
+		image.setFitWidth(120);
+		image.setFitHeight(35);
+		image.setImage(new Image("./resources/drop.png"));
+		MatchPeriod matchPeriod = new MatchPeriod(time, image);
+		matchPeriodData.add(matchPeriod);
+	}
+	@FXML
+	protected void winOutPoint(ActionEvent event){
+		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC)/1000;
+		ImageView image = new ImageView();
+		image.setFitWidth(120);
+		image.setFitHeight(35);
+		image.setImage(new Image("./resources/out.png"));
+		MatchPeriod matchPeriod = new MatchPeriod(time, image);
+		matchPeriodData.add(matchPeriod);
+	}
+	@FXML
+	protected void winNetPoint(ActionEvent event){
+		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC)/1000;
+		ImageView image = new ImageView();
+		image.setFitWidth(120);
+		image.setFitHeight(35);
+		image.setImage(new Image("./resources/net.png"));
+		MatchPeriod matchPeriod = new MatchPeriod(time, image);
+		matchPeriodData.add(matchPeriod);
+	}
+	@FXML
+	protected void loseSmashPoint(ActionEvent event){
+		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC)/1000;
+		ImageView image = new ImageView();
+		image.setFitWidth(120);
+		image.setFitHeight(35);
+		image.setImage(new Image("./resources/smash.png"));
+		MatchPeriod matchPeriod = new MatchPeriod(time, image);
+		matchPeriodData.add(matchPeriod);
+	}
+	@FXML
+	protected void loseDropPoint(ActionEvent event){
+		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC)/1000;
+		ImageView image = new ImageView();
+		image.setFitWidth(120);
+		image.setFitHeight(35);
+		image.setImage(new Image("./resources/drop.png"));
+		MatchPeriod matchPeriod = new MatchPeriod(time, image);
+		matchPeriodData.add(matchPeriod);
+	}
+	@FXML
+	protected void loseOutPoint(ActionEvent event){
+		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC)/1000;
+		ImageView image = new ImageView();
+		image.setFitWidth(120);
+		image.setFitHeight(35);
+		image.setImage(new Image("./resources/out.png"));
+		MatchPeriod matchPeriod = new MatchPeriod(time, image);
+		matchPeriodData.add(matchPeriod);
+	}
+	@FXML
+	protected void loseNetPoint(ActionEvent event){
+		double time = this.capture.get(Videoio.CAP_PROP_POS_MSEC)/1000;
+		ImageView image = new ImageView();
+		image.setFitWidth(120);
+		image.setFitHeight(35);
+		image.setImage(new Image("./resources/net.png"));
+		MatchPeriod matchPeriod = new MatchPeriod(time, image);
+		matchPeriodData.add(matchPeriod);
 	}
 	@FXML
 	protected void addPlayer(ActionEvent event){

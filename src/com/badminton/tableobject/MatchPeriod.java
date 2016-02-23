@@ -1,11 +1,12 @@
 package com.badminton.tableobject;
 
-import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class MatchPeriod {
 	private double time;
-	private Image event;
-	public MatchPeriod(double time, Image event) {
+	private ImageView event;
+	public MatchPeriod(double time, ImageView event) {
+		super();
 		this.time = time;
 		this.event = event;
 	}
@@ -15,10 +16,10 @@ public class MatchPeriod {
 	public void setTime(double time) {
 		this.time = time;
 	}
-	public Image getEvent() {
+	public ImageView getEvent() {
 		return event;
 	}
-	public void setEvent(Image event) {
+	public void setEvent(ImageView event) {
 		this.event = event;
 	}
 	@Override

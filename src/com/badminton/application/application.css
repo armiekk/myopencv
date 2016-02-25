@@ -6,7 +6,7 @@
 }
 
 .net-score {
-	-fx-background-image: url("../../../resources/net.png");
+	-fx-background-image: url("../../../resources/btn-net.png");
 	-fx-color: green;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;
@@ -14,7 +14,7 @@
 }
 
 .smash-score {
-	-fx-background-image: url("../../../resources/smash.png");
+	-fx-background-image: url("../../../resources/btn-smash.png");
 	-fx-color: green;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;
@@ -22,7 +22,7 @@
 }
 
 .drop-score {
-	-fx-background-image: url("../../../resources/drop.png");
+	-fx-background-image: url("../../../resources/btn-drop.png");
 	-fx-color: green;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;
@@ -30,7 +30,7 @@
 }
 
 .out-score {
-	-fx-background-image: url("../../../resources/out.png");
+	-fx-background-image: url("../../../resources/btn-out.png");
 	-fx-color: green;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;
@@ -38,7 +38,7 @@
 }
 
 .net-lose-score {
-	-fx-background-image: url("../../../resources/net.png");
+	-fx-background-image: url("../../../resources/btn-net.png");
 	-fx-color: red;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;
@@ -46,7 +46,7 @@
 }
 
 .smash-lose-score {
-	-fx-background-image: url("../../../resources/smash.png");
+	-fx-background-image: url("../../../resources/btn-smash.png");
 	-fx-color: red;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;
@@ -54,7 +54,7 @@
 }
 
 .drop-lose-score {
-	-fx-background-image: url("../../../resources/drop.png");
+	-fx-background-image: url("../../../resources/btn-drop.png");
 	-fx-color: red;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;
@@ -62,7 +62,7 @@
 }
 
 .out-lose-score {
-	-fx-background-image: url("../../../resources/out.png");
+	-fx-background-image: url("../../../resources/btn-out.png");
 	-fx-color: red;
 	-fx-background-size: 100px 30px;
 	-fx-background-position: center ;

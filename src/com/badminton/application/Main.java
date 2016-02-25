@@ -5,6 +5,7 @@ import org.opencv.core.Core;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 

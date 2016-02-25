@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.badminton.application.FXController">
+<AnchorPane fx:id="matchTracking" onKeyPressed="#pointOnKeyPressed" prefHeight="700.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.badminton.application.FXController">
   <children>
     <TabPane layoutX="-1.0" layoutY="0.0" prefHeight="700.0" prefWidth="1368.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
@@ -133,9 +134,9 @@
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="" styleClass=", panel-control" GridPane.columnIndex="1" GridPane.rowIndex="0">
                           <children>
-                            <Button fx:id="startBtn" layoutX="163.0" layoutY="36.0" mnemonicParsing="false" onAction="#startCamera" prefHeight="40.0" prefWidth="130.0" text="Play Video" />
-                            <Button layoutX="309.0" layoutY="36.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Record Video" />
-                            <Button fx:id="loadBtn" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#browVideo" prefHeight="40.0" prefWidth="130.0" text="Load Video" />
+                            <Button fx:id="startBtn" layoutX="163.0" layoutY="43.0" mnemonicParsing="false" onAction="#startCamera" prefHeight="40.0" prefWidth="130.0" text="Play Video" />
+                            <Button fx:id="loadBtn" layoutX="21.0" layoutY="43.0" mnemonicParsing="false" onAction="#browVideo" prefHeight="40.0" prefWidth="130.0" text="Load Video" />
+                            <ComboBox fx:id="setList" layoutX="306.0" layoutY="43.0" onAction="#chageSet" prefHeight="40.0" prefWidth="130.0" promptText="Set" />
                           </children>
                           <stylesheets>
                             <URL value="@application.css" />
@@ -166,23 +167,26 @@
                       <children>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                           <children>
-                            <TableView fx:id="matchPeriodTable" layoutX="14.0" layoutY="14.0" prefHeight="514.0" prefWidth="234.0">
+                            <TableView fx:id="matchPeriodTable" layoutX="14.0" layoutY="14.0" prefHeight="514.0" prefWidth="388.0">
                               <columns>
-                                <TableColumn fx:id="timeCol" maxWidth="5000.0" minWidth="10.0" prefWidth="95.0" text="เวลา" />
-                                <TableColumn fx:id="eventCol" maxWidth="5000.0" minWidth="10.0" prefWidth="149.0" text="เหตุการณ์" />
+                                <TableColumn fx:id="timeCol" maxWidth="5000.0" minWidth="10.0" prefWidth="86.0" text="เวลา" />
+                                <TableColumn fx:id="winPointCol" prefWidth="70.0" text="คะแนนที่ได้" />
+                                <TableColumn fx:id="losePointCol" prefWidth="70.0" text="คะแนนที่เสีย" />
+                                <TableColumn fx:id="eventCol" maxWidth="5000.0" minWidth="10.0" prefWidth="100.0" text="เหตุการณ์" />
+                                <TableColumn fx:id="setCol" prefWidth="65.0" text="เซต" />
                               </columns>
                             </TableView>
                           </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" GridPane.columnIndex="0" GridPane.rowIndex="0">
                           <children>
-                            <ImageView fx:id="currentFrame" fitHeight="501.75" fitWidth="800.0" layoutX="152.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
+                            <ImageView fx:id="currentFrame" fitHeight="501.75" fitWidth="800.0" layoutX="77.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
                           </children>
                         </Pane>
                       </children>
                       <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1124.0" minWidth="10.0" prefWidth="1103.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="679.0" minWidth="10.0" prefWidth="263.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1124.0" minWidth="10.0" prefWidth="953.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="679.0" minWidth="10.0" prefWidth="413.0" />
                       </columnConstraints>
                       <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -197,44 +201,119 @@
         <Tab text="Replay Match">
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <GridPane layoutX="0.0" layoutY="0.0" prefHeight="669.0" prefWidth="1368.0">
-                  <children>
-                    <Pane prefHeight="158.0" prefWidth="973.0" styleClass="panel-control" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                      <children>
-                        <Button id="start_btn" layoutX="441.0" layoutY="67.0" mnemonicParsing="false" onAction="#startCamera" prefHeight="40.0" prefWidth="130.0" text="Play Video" />
-                        <Button layoutX="701.0" layoutY="67.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Capture Image" />
-                        <Button id="load_btn" layoutX="181.0" layoutY="67.0" mnemonicParsing="false" onAction="#browVideo" prefHeight="40.0" prefWidth="130.0" text="Load Video" />
-                      </children>
-                      <stylesheets>
-                        <URL value="@application.css" />
-                      </stylesheets>
-                    </Pane>
-                    <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;&#10;" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                      <children>
-                        <ImageView fitHeight="461.0" fitWidth="614.6666666666666" layoutX="198.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
-                      </children>
-                    </Pane>
-                    <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                      <content>
-                        <ListView prefHeight="486.0" prefWidth="355.0" />
-                      </content>
-                    </ScrollPane>
-                  </children>
-                  <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1023.0" minWidth="10.0" prefWidth="1011.0" />
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="683.0" minWidth="10.0" prefWidth="357.0" />
-                  </columnConstraints>
-                  <rowConstraints>
-                    <RowConstraints maxHeight="510.0" minHeight="10.0" prefHeight="487.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="320.0" minHeight="10.0" prefHeight="182.0" vgrow="SOMETIMES" />
-                  </rowConstraints>
-                </GridPane>
-              </children>
+                     <children>
+                        <GridPane prefHeight="671.0" prefWidth="1000.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="573.0" minHeight="10.0" prefHeight="573.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="330.0" minHeight="10.0" prefHeight="98.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Pane prefHeight="200.0" prefWidth="200.0" styleClass="panel-control" stylesheets="@application.css" GridPane.rowIndex="1">
+                                 <children>
+                                    <Button layoutX="82.0" layoutY="29.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Browse Video" />
+                                    <Button layoutX="262.0" layoutY="29.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Play Video" />
+                                    <Button layoutX="443.0" layoutY="29.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="&lt;&lt; 10" />
+                                    <Button layoutX="617.0" layoutY="29.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="10 &gt;&gt;" />
+                                    <Button layoutX="794.0" layoutY="29.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Capture Video" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;">
+                                 <children>
+                                    <ImageView fitHeight="547.0" fitWidth="975.0" layoutX="13.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </GridPane>
+                        <GridPane layoutX="1000.0" prefHeight="672.0" prefWidth="368.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="452.0" minHeight="10.0" prefHeight="391.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="331.0" minHeight="10.0" prefHeight="281.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Pane prefHeight="200.0" prefWidth="200.0" styleClass="panel-control" stylesheets="@application.css" GridPane.rowIndex="1">
+                                 <children>
+                                    <Label layoutX="153.0" layoutY="14.0" text="Screenshort" />
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView prefHeight="391.0" prefWidth="368.0">
+                                      <columns>
+                                        <TableColumn prefWidth="154.0" text="เวลา" />
+                                        <TableColumn prefWidth="214.0" text="เหตุการณ์" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </GridPane>
+                     </children>
             </AnchorPane>
           </content>
         </Tab>
+            <Tab text="Statistics">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane prefHeight="672.0" prefWidth="1368.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Pane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <BarChart layoutX="17.0" layoutY="13.0" prefHeight="310.0" prefWidth="650.0" title="Set 1">
+                                      <xAxis>
+                                        <CategoryAxis label="เหตุการณ์" side="BOTTOM" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis autoRanging="false" label="คะแนน" side="LEFT" upperBound="24.0" />
+                                      </yAxis>
+                                    </BarChart>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <BarChart layoutX="17.0" layoutY="13.0" prefHeight="310.0" prefWidth="650.0" title="Set 2">
+                                       <xAxis>
+                                          <CategoryAxis label="เหตุการณ์" side="BOTTOM" />
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis autoRanging="false" label="คะแนน" side="LEFT" upperBound="24.0" />
+                                       </yAxis>
+                                    </BarChart>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <BarChart layoutX="17.0" layoutY="13.0" prefHeight="310.0" prefWidth="650.0" title="Set 3">
+                                       <xAxis>
+                                          <CategoryAxis label="เหตุการณ์" side="BOTTOM" />
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis autoRanging="false" label="คะแนน" side="LEFT" upperBound="24.0" />
+                                       </yAxis>
+                                    </BarChart>
+                                 </children>
+                              </Pane>
+                              <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
       </tabs>
     </TabPane>
   </children>
